@@ -220,6 +220,7 @@ def deserialize_str(bit_str, settings: SerializerSettings, ignore_last=False, st
         max_len = max([len(d) for d in digits_arr])
         for i in range(len(digits_arr)):
             digits_arr[i] = [0]*(max_len-len(digits_arr[i])) + digits_arr[i]
+        print(vrepr2num(np.array(sign_arr), np.array(digits_arr)))
         return vrepr2num(np.array(sign_arr), np.array(digits_arr))
     else:
         # errored at first step

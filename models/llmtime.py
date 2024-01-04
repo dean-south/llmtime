@@ -86,6 +86,8 @@ def truncate_input(input_arr, input_str, settings, model, steps):
                 break
         if i > 0:
             print(f'Warning: Truncated input from {len(input_arr)} to {len(truncated_input_arr)}')
+
+            
         return truncated_input_arr, truncated_input_str
     else:
         return input_arr, input_str
@@ -150,7 +152,7 @@ def generate_predictions(
             - completions_list (list of lists): Raw text completions.
             - input_strs (list of str): Serialized input strings.
     """
-    
+    print(f'Steps: {steps*STEP_MULTIPLIER}')
     completions_list = []
     complete = lambda x: completion_fn(input_str=x, steps=steps*STEP_MULTIPLIER, settings=settings, num_samples=num_samples, temp=temp)
     if parallel and len(input_strs) > 1:
@@ -217,7 +219,7 @@ def get_llmtime_predictions_data(train, test, model, settings, num_samples=10, t
     transformed_input_arrs = np.array([scaler.transform(input_array) for input_array, scaler in zip(input_arrs, scalers)])
     # serialize input_arrs
     input_strs = [serialize_arr(scaled_input_arr, settings) for scaled_input_arr in transformed_input_arrs]
-    # Truncate input_arrs to fit the maximum context length
+    # Truncate 
     input_arrs, input_strs = zip(*[truncate_input(input_array, input_str, settings, model, test_len) for input_array, input_str in zip(input_arrs, input_strs)])
     
     steps = test_len
